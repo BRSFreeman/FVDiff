@@ -79,7 +79,8 @@ class greenGaussBase:
         # iterate over faces to calculate flux in or out
         out = np.zeros(out_shape)
 
-        for ridge in trange(self.n_ridges):
+        for ridge in range(self.n_ridges):
+            print(ridge)
             vertices = self.ridge_vertices[ridge]
 
             # exclude infinite vertices
