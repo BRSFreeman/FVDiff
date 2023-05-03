@@ -77,7 +77,7 @@ class greenGaussBase:
 
     def green_gauss(self, q, out_shape):
         # iterate over faces to calculate flux in or out
-        out = np.zeros(out_shape)
+        out = np.zeros(out_shape, dtype=q.dtype)
 
         for ridge in trange(self.n_ridges):
             vertices = self.ridge_vertices[ridge]
@@ -187,7 +187,7 @@ def _lstsq_grad(points, vertices, u, pts, ridge, neighbours, pt):
 
     Rinv = 1/np.sqrt(np.sum(dx**2, axis=1))
     
-    A = np.zeros((dx.shape[0], dx.shape[1]+1))
+    A = np.zeros((dx.shape[0], dx.shape[1]+1), dtype=u.dtype)
     A[:, 0] = Rinv
     A[:, 1:] = (Rinv*dx.T).T
     b = (Rinv*u_n.T).T
