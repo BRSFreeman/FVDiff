@@ -197,6 +197,7 @@ def _lstsq_grad(points, vertices, u, pts, ridge, neighbours, pt):
     return x[1:]
 
 
+@njit
 def _partial_interp(points, vertices, u, pts, ridge, neighbours, pt):
     """interpolate based on the Delaunay simplices shared by 
        two points of a Voronoi diagram
@@ -212,7 +213,7 @@ def _partial_interp(points, vertices, u, pts, ridge, neighbours, pt):
         xi = points[i]
         
         lamb = _barycentric_coords(
-            np.stack([x0, x1, xi], axis=1),
+            np.stack((x0, x1, xi), axis=1),
             pt
         )
         
@@ -292,6 +293,7 @@ def area3d(mesh, vertex_idx):
     
     return _3d_area(points)
 
+
 @njit
 def _3d_area(points):
     area = 0
@@ -304,7 +306,8 @@ def _3d_area(points):
         area += 1/2*norm(cross3(d12, d23))
     
     return area
-    
+
+
 @njit
 def cross3(a, b):
     return np.array([
@@ -312,6 +315,7 @@ def cross3(a, b):
         a[2]*b[0] - a[0]*b[2],
         a[0]*b[1] - a[1]*b[0]
     ])
+
 
 @njit
 def div_area(x):
